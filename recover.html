@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Recovery</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        .subheader {
+            font-size: 14px;
+            color: #666;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+
+        .phrase-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .phrase-box {
+            width: 150px;
+            padding: 10px;
+            margin: 5px;
+            border: 2px solid #7d10b7;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+        }
+
+        .continue-button {
+            padding: 10px 20px;
+            background-color: #7d10b7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Recover Your Wallet</div>
+    <div class="subheader">Please enter your 12-word recovery phrase to access your wallet.</div>
+
+    <div class="phrase-container">
+        <input class="phrase-box" type="text" id="word1" placeholder="Word 1">
+        <input class="phrase-box" type="text" id="word2" placeholder="Word 2">
+        <input class="phrase-box" type="text" id="word3" placeholder="Word 3">
+        <input class="phrase-box" type="text" id="word4" placeholder="Word 4">
+        <input class="phrase-box" type="text" id="word5" placeholder="Word 5">
+        <input class="phrase-box" type="text" id="word6" placeholder="Word 6">
+        <input class="phrase-box" type="text" id="word7" placeholder="Word 7">
+        <input class="phrase-box" type="text" id="word8" placeholder="Word 8">
+        <input class="phrase-box" type="text" id="word9" placeholder="Word 9">
+        <input class="phrase-box" type="text" id="word10" placeholder="Word 10">
+        <input class="phrase-box" type="text" id="word11" placeholder="Word 11">
+        <input class="phrase-box" type="text" id="word12" placeholder="Word 12">
+    </div>
+
+    <button class="continue-button" onclick="verifyPhrase()">Continue</button>
+
+    <script>
+        function verifyPhrase() {
+            const phrase = [];
+            for (let i = 1; i <= 12; i++) {
+                const word = document.getElementById(`word${i}`).value.trim();
+                if (!word) {
+                    alert('Please fill all 12 words.');
+                    return;
+                }
+                phrase.push(word);
+            }
+
+            // Perform the mnemonic phrase validation here (client-side check).
+            // You can use a library like bitcoinjs/bip39 for this.
+
+            const isValid = validateMnemonic(phrase.join(' ')); // This function checks if the phrase is valid.
+
+            if (isValid) {
+                alert('Phrase is valid. Proceeding to recover your wallet...');
+                // Redirect or load the wallet here.
+            } else {
+                alert('Invalid recovery phrase. Please try again.');
+            }
+        }
+
+        // A dummy function to mimic the BIP39 validation (replace with actual validation).
+        function validateMnemonic(phrase) {
+            // Example: Implement BIP39 phrase validation here.
+            return true;  // Return true if valid, false if invalid.
+        }
+    </script>
+</body>
+</html>

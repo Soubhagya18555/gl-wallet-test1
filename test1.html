@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solana Keypair Generation</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+        .subheader {
+            font-size: 14px;
+            color: #666;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+        .phrase-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .phrase-box {
+            width: 150px;
+            padding: 10px;
+            margin: 5px;
+            border: 2px solid #7d10b7;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .copy-button {
+            background-color: transparent;
+            color: #7d10b7;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Your Solana Keypair</div>
+    <div class="subheader">Please save this keypair in a secure place. It is used to access your wallet.</div>
+    <div class="phrase-container" id="phrase-container"></div>
+    <button id="copy-button" class="copy-button">Copy</button>
+
+    <!-- Include the Solana Web3.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.45.0/dist/web3.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Ensure solanaWeb3 is available
+                if (typeof solanaWeb3 === 'undefined') {
+                    throw new Error('Solana Web3.js library not loaded.');
+                }
+
+                // Generate a new Solana Keypair
+                const { Keypair } = solanaWeb3;
+                const newAccount = Keypair.generate();
+                const publicKey = newAccount.publicKey.toString();
+                const secretKey = newAccount.secretKey;
+
+                // Convert secret key to a more readable format
+                const seedPhrase = Array.from(secretKey).map(byte => byte.toString(16).padStart(2, '0')).join(' ');
+                console.log("Generated keypair:", seedPhrase);
+
+                // Display the generated keypair
+                const words = seedPhrase.split(' ');
+                const phraseContainer = document.getElementById('phrase-container');
+                phraseContainer.innerHTML = ''; // Clear any existing content
+
+                words.forEach((word, index) => {
+                    const phraseBox = document.createElement('div');
+                    phraseBox.classList.add('phrase-box');
+                    phraseBox.textContent = `${index + 1}. ${word}`;
+                    phraseContainer.appendChild(phraseBox);
+                });
+
+                // Copy functionality
+                const copyButton = document.getElementById('copy-button');
+                copyButton.addEventListener('click', () => {
+                    navigator.clipboard.writeText(seedPhrase).then(() => {
+                        alert('Keypair copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
+
+                // Logging public and private key for development purposes
+                console.log("Public Key:", publicKey);
+                console.log("Secret Key:", secretKey);
+            } catch (error) {
+                console.error('Error generating keypair:', error);
+            }
+        });
+    </script>
+</body>
+</html>

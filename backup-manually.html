@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup Your Wallet</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            overflow: hidden; /* Disable scrolling */
+            user-select: none;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #7d10b7;
+        }
+
+        .header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .subheader {
+            font-size: 14px;
+            color: #666;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .image-container img {
+            width: 90%;
+            max-width: 400px;
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            pointer-events: none;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+            margin-left: 10%;
+        }
+
+        .checkbox-item label {
+            font-size: 16px; /* Adjust the font size */
+            color: #333; /* Change color if needed */
+            line-height: 1.5; /* Adjust line height for better spacing */
+            font-weight: normal; /* Adjust font weight if needed */
+}
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .continue-button {
+            padding: 10px 20px;
+            background-color: #7d10b7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0.5;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .continue-button.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page Content -->
+    <div class="content">
+        <div class="header">Backup Your Wallet Now!</div>
+        <div class="subheader">In the next step you will see Secret Phrase (12/24 words) that allows you to recover a wallet.</div>
+
+        <!-- Image -->
+        <div class="image-container">
+            <img src="Screenshot 2024-09-14 131837.png" alt="Backup Image">
+        </div>
+
+        <!-- Checkbox Container -->
+        <div class="checkbox-container">
+            <div class="checkbox-item">
+                <input type="checkbox" id="checkbox1">
+                <label for="checkbox1">I have written down my secret phrase.</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="checkbox2">
+                <label for="checkbox2">I understand that losing my secret phrase means losing access to my wallet.</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="checkbox3">
+                <label for="checkbox3">I will keep my secret phrase safe and secure.</label>
+            </div>
+        </div>
+
+        <!-- Continue Button -->
+        <button id="continue-button" class="continue-button">Continue</button>
+    </div>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.checkbox-container input[type="checkbox"]');
+        const continueButton = document.getElementById('continue-button');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Check if all checkboxes are ticked
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                if (allChecked) {
+                    continueButton.classList.add('show');
+                    continueButton.addEventListener('click', () => {
+                        window.location.href = 'phrase.html'; // Replace with the URL of the next page
+                    });
+                } else {
+                    continueButton.classList.remove('show');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

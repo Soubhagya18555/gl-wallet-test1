@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .logo {
+            margin-top: 10px;
+            width: 80px;
+            height: auto;
+            pointer-events: none;
+        }
+
+        .phrase-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            gap: 10px;
+            max-width: 600px;
+        }
+
+        .phrase-box {
+            width: 150px;
+            padding: 6px;
+            margin: 5px;
+            border: 2px solid #7d10b7;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .phrase-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+            background: transparent;
+        }
+
+        .phrase-box.empty {
+            border: 2px solid #ccc;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #7d10b7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+
+        .image-container img {
+            width: 90%;
+            max-width: 400px;
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            pointer-events: none;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+            margin-left: 10%;
+        }
+
+        .checkbox-item label {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.5;
+            font-weight: normal;
+            margin-top: 78px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            margin-left: 20px;
+            margin-top: 80px;
+        }
+
+        .submit-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="header">Verify Your Phrase</div>
+    </div>
+
+    <div class="phrase-container" id="phrase-column"></div>
+
+    <div class="checkbox-container">
+        <div class="checkbox-item">
+            <input type="checkbox" id="checkbox1">
+            <label for="checkbox1">Agree to our terms and conditions.</label>
+        </div>
+    </div>
+
+    <button id="submit-button" class="submit-button" disabled>Submit</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve mnemonic from local storage
+            const mnemonic = localStorage.getItem('mnemonic');
+            if (!mnemonic) {
+                alert('No mnemonic found. Please generate a new one.');
+                window.location.href = 'phrase.html'; // Replace with your phrase generation page URL
+                return;
+            }
+
+            // Split mnemonic into words and display
+            const words = mnemonic.split(' ');
+            const phraseColumn = document.getElementById('phrase-column');
+            
+            words.forEach((word, index) => {
+                const phraseBox = document.createElement('div');
+                phraseBox.classList.add('phrase-box');
+                if (index % 2 === 1) { // Display as empty box for positions 2, 4, 6, 8, 10, 12
+                    phraseBox.classList.add('empty');
+                    phraseBox.innerHTML = `<input type="text" data-index="${index}" placeholder="Enter word">`;
+                } else {
+                    phraseBox.textContent = `${index + 1}. ${word}`;
+                }
+                phraseColumn.appendChild(phraseBox);
+            });
+
+            // Handle form submission
+            document.getElementById('submit-button').addEventListener('click', function () {
+                const inputs = document.querySelectorAll('.phrase-box input');
+                const enteredWords = Array.from(inputs).map(input => input.value.trim());
+                const correctWords = words.filter((_, index) => index % 2 === 1);
+
+                // Check if entered words match correct words
+                const isValid = enteredWords.every((word, index) => word === correctWords[index]);
+
+                if (isValid) {
+    alert('Verification successful!');
+    window.location.href = 'next-page.html'; // Replace 'next-page.html' with your actual next page
+} else {
+    alert('Verification failed. Please try again.');
+}
+            });
+
+            // Checkbox logic for enabling the button
+            const checkbox = document.getElementById('checkbox1');
+            const submitButton = document.getElementById('submit-button');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    submitButton.disabled = false;
+                } else {
+                    submitButton.disabled = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

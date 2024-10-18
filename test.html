@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #f1f1f1; /* Light background for the header */
+            border-bottom: 1px solid #ddd; /* Subtle border for separation */
+        }
+
+        .header img {
+            width: 24px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        .wallet-amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .action-buttons button {
+            background-color: #f9f9f9;
+            border: 2px solid #7d10b7;
+            border-radius: 50%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+        }
+
+        .action-buttons button img {
+            width: 40px;
+            height: auto;
+        }
+
+        .action-buttons button span {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #7d10b7;
+        }
+
+        .token-section {
+            margin-top: 30px;
+        }
+
+        .token-section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .token-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .token-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .token-item img {
+            width: 24px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .token-item .name {
+            flex: 1;
+            text-align: left;
+        }
+
+        .token-item .price {
+            flex: 1;
+            text-align: right;
+        }
+
+        .token-item .price span {
+            font-size: 14px;
+        }
+
+        .token-item .price .growth {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="notification.png" alt="Notification">
+        <img src="hamburger.png" alt="Menu">
+    </div>
+
+    <div class="wallet-amount">
+        $10,000.00
+    </div>
+
+    <div class="action-buttons">
+        <button>
+            <img src="send.png" alt="Send">
+            <span>Send</span>
+        </button>
+        <button>
+            <img src="receive.png" alt="Receive">
+            <span>Receive</span>
+        </button>
+        <button>
+            <img src="swap.png" alt="Swap">
+            <span>Swap</span>
+        </button>
+    </div>
+
+    <div class="token-section">
+        <h2>Tokens</h2>
+        <div class="token-list">
+            <div class="token-item">
+                <img src="btc-logo.png" alt="BTC">
+                <div class="name">BTC</div>
+                <div class="price">
+                    $50,000.00 <span class="growth" style="color: green;">+0.75%</span>
+                </div>
+            </div>
+            <div class="token-item">
+                <img src="eth-logo.png" alt="ETH">
+                <div class="name">ETH</div>
+                <div class="price">
+                    $3,200.00 <span class="growth" style="color: red;">-1.25%</span>
+                </div>
+            </div>
+            <div class="token-item">
+                <img src="usdt-logo.png" alt="USDT">
+                <div class="name">USDT</div>
+                <div class="price">
+                    $1.00 <span class="growth" style="color: green;">+0.00%</span>
+                </div>
+            </div>
+            <div class="token-item">
+                <img src="bnb-logo.png" alt="BNB">
+                <div class="name">BNB</div>
+                <div class="price">
+                    $400.00 <span class="growth" style="color: green;">+2.50%</span>
+                </div>
+            </div>
+            <div class="token-item">
+                <img src="sol-logo.png" alt="SOL">
+                <div class="name">SOL</div>
+                <div class="price">
+                    $25.00 <span class="growth" style="color: red;">-0.50%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

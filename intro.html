@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Wallet</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        /* Splash Screen Styles */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .logo {
+            width: 80px;
+            height: auto;
+            animation: popUp 1s ease-out;
+            
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .loading-bar {
+            width: 40%;
+            height: 4px;
+            background-color: #e0e0e0;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #7d10b7;
+            animation: load 3s ease-in-out forwards;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Main Content */
+        .main-content {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Image Carousel Styles */
+        .carousel {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-inner {
+            display: flex;
+            width: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel img {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+            flex: 0 0 100%;
+            pointer-events: none;
+        }
+
+        /* Dot Styles */
+        .dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .dots div {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: inline-block;
+            margin-bottom: 150px;
+        }
+
+        .dots div.active {
+            background-color: #7d10b7;
+        }
+
+        /* Text Styles */
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: -30px;
+        }
+
+        .subheader {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Buttons */
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .main-content {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    max-width: 375px; /* Adjust as needed */
+    margin: 0 auto; /* Center horizontally */
+}
+
+        .button {
+            padding: 15px 50px;
+            background-color: #7d10b7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            margin-top: 70px;
+        }
+
+        .second-button {
+            background-color: #ffffff00; /* Change background color */
+            color: rgb(77, 11, 163); /* Change text color */
+            font-weight: bold; /* Change text weight */
+            transition: background-color 0.3s, transform 0.3s; /* Add transition for hover effects */
+            margin-top: 0px;
+}
+
+@media (max-width: 768px) { /* Tablet and mobile */
+    .main-content {
+        max-width: 375px; /* Ensure mobile width */
+        margin: 0 auto;
+        padding: 20px;
+    }
+}
+
+@media (min-width: 769px) { /* Desktop and larger screens */
+    .main-content {
+        max-width: 375px; /* Ensure mobile width on larger screens */
+        margin: 0 auto;
+        padding: 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="logo">
+        </div>
+        <div class="loading-bar">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content">
+        <!-- Dots for Navigation -->
+        <div class="dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <!-- Carousel for Images -->
+        <div class="carousel">
+            <div class="carousel-inner">
+                <img src="Screenshot 2024-09-14 131837.png" alt="Feature 1" class="active">
+                <img src="feature2.png" alt="Feature 2">
+                <img src="feature3.png" alt="Feature 3">
+                <img src="feature4.png" alt="Feature 4">
+                <img src="feature3.png" alt="Feature 5">
+            </div>
+        </div>
+
+        <!-- Text Descriptions -->
+        <div class="header">Private & Secure</div>
+        <div class="subheader">Private keys never leave your</div>
+
+        <div class="button-container">
+            <a href="secretphrasebackup.html">
+                <button class="button">Create a New Wallet</button>
+            </a>
+            <a href="already-have-wallet.html">
+                <button class="button second-button">I Already Have a Wallet</button>
+            </a>
+        </div>
+    </div>
+    <script>
+        // Show splash screen for 1 second, then show main content
+        setTimeout(function() {
+            document.getElementById("splash-screen").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
+        }, 3000);
+    
+        // Carousel functionality
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.carousel-inner img');
+        const dots = document.querySelectorAll('.dots .dot');
+        const headers = [
+            "Private & Secure",
+            "All assets in one place",
+            "Trade assets",
+            "Explore decentralized apps",
+            "Goodluck"
+        ];
+        const subheaders = [
+            "Private keys never leave your device.",
+            "View and store your assets seamlessly.",
+            "Trade your assets anonymously.",
+            "Earn, explore, utilize, spend, trade and more.",
+            "Powered by Goodluck Labs."
+        ];
+        let autoSlideInterval;
+    
+        function showSlide(index) {
+            const offset = -index * 100;
+            document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            document.querySelector('.header').innerText = headers[index];
+            document.querySelector('.subheader').innerText = subheaders[index];
+        }
+    
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+    
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showSlide(currentIndex);
+        }
+    
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 3000); // Slide every 3 seconds
+        }
+    
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+    
+        // Start auto-slide
+        startAutoSlide();
+    
+        // Add slide navigation with finger swipe and dot click
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoSlide();
+                currentIndex = index;
+                showSlide(currentIndex);
+                startAutoSlide();
+            });
+        });
+    
+        // Swipe functionality
+        let startX, endX, isTouching = false;
+        const carousel = document.querySelector('.carousel');
+    
+        function handleTouchStart(event) {
+            startX = event.touches[0].clientX;
+            stopAutoSlide(); // Stop auto-slide during touch
+            isTouching = true;
+        }
+    
+        function handleTouchEnd(event) {
+            if (!isTouching) return;
+            endX = event.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+                // Swipe left
+                nextSlide();
+            } else if (endX - startX > 50) {
+                // Swipe right
+                prevSlide();
+            }
+            startAutoSlide(); // Restart auto-slide after swipe
+            isTouching = false;
+        }
+    
+        function handleMouseDown(event) {
+            startX = event.clientX;
+            stopAutoSlide(); // Stop auto-slide during mouse interaction
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        }
+    
+        function handleMouseMove(event) {
+            endX = event.clientX;
+        }
+    
+        function handleMouseUp() {
+            if (startX - endX > 50) {
+                // Swipe left
+                nextSlide();
+            } else if (endX - startX > 50) {
+                // Swipe right
+                prevSlide();
+            }
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            startAutoSlide(); // Restart auto-slide after mouse interaction
+        }
+    
+        carousel.addEventListener('touchstart', handleTouchStart);
+        carousel.addEventListener('touchend', handleTouchEnd);
+        carousel.addEventListener('mousedown', handleMouseDown);
+    
+        // Disable image and text selection
+        document.body.style.userSelect = 'none';
+    </script>
+   
+</body>
+</html>
